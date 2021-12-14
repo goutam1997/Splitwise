@@ -1,15 +1,19 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Group {
 	private String name;
-	private List<User> members;
+	private Map<User, Double> membersBalance;
 	
 	public Group(String name, List<User> members) {
 		super();
 		this.name = name;
-		this.members = members;
+		membersBalance = new HashMap<>();
+		members.forEach(member -> membersBalance.put(member, 0.0));
 	}
 	
 	public String getName() {
@@ -18,13 +22,17 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<User> getMembers() {
+	public List<String> getMemberNames() {
+		List<String> members = new ArrayList<>();
+		membersBalance.forEach((member, balance) -> members.add(member.getName()));
 		return members;
 	}
 	public void setMembers(List<User> members) {
-		this.members = members;
+		if(membersBalance == null)
+			membersBalance = new HashMap<>();
+		members.forEach(member -> membersBalance.put(member, 0.0));
 	}
 	public void addUserToGroup(User user) {
-		members.add(user);
+		membersBalance.put(user, 0.0);
 	}
 }

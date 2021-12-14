@@ -42,4 +42,11 @@ public class GroupServiceImpl implements GroupService {
 		
 		return groups.get(groupName);
 	}
+	
+	public List<String> getMemberNames(String groupName) throws GroupNotFoundException {
+		if(!groups.containsKey(groupName))
+			throw new GroupNotFoundException(groupName);
+		
+		return groups.get(groupName).getMemberNames();
+	}
 }

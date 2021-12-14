@@ -36,8 +36,14 @@ public class Driver {
 
 		new BillServiceImpl().addBillToGroup(bill, "Blr flatmates");
 		
-		System.out.println("Goutam: " + userService.getUserBalance("Goutam"));
-		System.out.println("Piyush: " + userService.getUserBalance("Piyush"));
-		System.out.println("Kaushal: " + userService.getUserBalance("Kaushal"));
+		groupService.getMemberNames("Blr flatmates").forEach(member -> 
+				{
+					try {
+						System.out.println(member + "'s Balance -> " + userService.getUserBalance(member));
+					} catch (UserNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
 	}
 }
