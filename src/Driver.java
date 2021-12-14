@@ -8,6 +8,7 @@ import exceptions.UserNameExistsException;
 import exceptions.UserNotFoundException;
 import models.Bill;
 import models.BillBuilder;
+import services.BillService;
 import services.BillServiceImpl;
 import services.GroupService;
 import services.GroupServiceImpl;
@@ -15,14 +16,16 @@ import services.UserService;
 import services.UserServiceImpl;
 
 public class Driver {
+	private static UserService userService = new UserServiceImpl();
+	private static GroupService groupService = new GroupServiceImpl();
+	private static BillService billService = new BillServiceImpl();
+	
 	public static void main(String args[]) throws GroupNameExistsException, UserNotFoundException, UserNameExistsException, GroupNotFoundException {
-		UserService userService = new UserServiceImpl();
-
+		
 		userService.createUser("Goutam");
 		userService.createUser("Piyush");
 		userService.createUser("Kaushal");
-
-		GroupService groupService = new GroupServiceImpl();
+		
 		groupService.createGroup("Blr flatmates", Arrays.asList("Goutam", "Piyush", "Kaushal"));
 
 		Map<String, Double> paidBy = new HashMap<>(), ownedBy = new HashMap<>();
@@ -34,7 +37,7 @@ public class Driver {
 
 		Bill bill = new BillBuilder().setName("Rent").setAmount(300.0).setPaidBy(paidBy).setOwnedBy(ownedBy).getBill();
 
-		new BillServiceImpl().addBillToGroup(bill, "Blr flatmates");
+		billService.addBillToGroup(bill, "Blr flatmates");
 		
 		groupService.getMemberNames("Blr flatmates").forEach(member -> 
 				{
